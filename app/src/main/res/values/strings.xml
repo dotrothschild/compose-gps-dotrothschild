@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Kotlin Gps Dotrothschild</string>
+    <string name="touch_and_select_from_list">Touch and select from list</string>
+    <string name="placeholder_location">Placeholder location</string>
+</resources>
