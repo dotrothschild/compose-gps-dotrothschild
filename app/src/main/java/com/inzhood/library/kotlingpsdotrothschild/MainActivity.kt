@@ -1,8 +1,10 @@
 package com.inzhood.library.kotlingpsdotrothschild
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +17,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,15 +25,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.inzhood.library.kotlingpsdotrothschild.ui.theme.KotlinGpsDotrothschildTheme
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.lifecycle.liveData
-
 
 class MainActivity : ComponentActivity() {
+    private
+
+    val viewModel: MainActivityViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.updateCandidateSpeed(getString(R.string.touch_and_select_from_list)) // Modify to view model factory when getting complex
         setContent {
             KotlinGpsDotrothschildTheme {
                 // A surface container using the 'background' color from the theme
@@ -38,17 +43,19 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    GpsSelectionScreen()
+                    GpsSelectionScreen(viewModel)
                 }
             }
         }
     }
 }
 
+@SuppressLint("ProduceStateDoesNotAssignValue")
 @Composable
-fun GpsSelectionScreen(viewModel: MainActivityViewModel = remember { MainActivityViewModel() })
+fun GpsSelectionScreen(viewModel: MainActivityViewModel)
+// this is when not explicitly passing the viewModel as param (viewModel: MainActivityViewModel = remember { MainActivityViewModel() })
 {
-    val currentLocation = "test string"
+    val currentLocation by viewModel.currentLocation.collectAsState(initial = stringResource(R.string.location_not_found))
 
     Spacer(modifier = Modifier.height(16.dp))
     val chooseSelectionText = stringResource(R.string.touch_and_select_from_list)
@@ -58,32 +65,28 @@ fun GpsSelectionScreen(viewModel: MainActivityViewModel = remember { MainActivit
             .wrapContentSize(Alignment.Center) // Center within parent
     )
     {
-        var locationText by remember { mutableStateOf("Current location: $currentLocation") }
         Text(
-            text = locationText,
+            text = "Current Location: $currentLocation",
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
         )
-
-        val selectionItems = listOf("Item 1", "Item 2", "Item 3", "Item 4", "Item 5")
-        var selectedItem by remember { mutableStateOf(selectionItems[0]) }
-        selectedItem = stringResource(id = R.string.touch_and_select_from_list)
-        var buttonEnabled by remember { mutableStateOf(selectedItem != chooseSelectionText) }
-
+        val selectionSpeeds = listOf("Speed 1", "Speed 2", "Speed 3", "Speed 4", "Speed 5")
+        var buttonEnabled by remember { mutableStateOf(viewModel.candidateSpeed.value != chooseSelectionText) }
         Spacer(modifier = Modifier.height(16.dp))
         Dropdown(Modifier.wrapContentSize(),
-            list = selectionItems,
+            list = selectionSpeeds,
             onItemSelected = { item->
-                selectedItem = item
-                buttonEnabled = selectedItem!= chooseSelectionText
+                viewModel.updateCandidateSpeed(item)
+                buttonEnabled = item != chooseSelectionText
             }) //dropdown list
 
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
-                viewModel.increment()
-                locationText = viewModel.currentLocation.value
+                viewModel.increment() // just for testing purposes, current location is updated in the viewModel
+                viewModel.updateCurrentSpeed()
+
             },
             enabled = buttonEnabled,
             modifier = Modifier
@@ -94,7 +97,22 @@ fun GpsSelectionScreen(viewModel: MainActivityViewModel = remember { MainActivit
         {
             Text(text = "Confirm")
         } // end of Column
+        Spacer(modifier = Modifier.height(16.dp))
+
+        val currentSpeed by viewModel.currentSpeed.collectAsState(initial = stringResource(R.string.none_selected))
+        Text(
+            text = "Current Speed: $currentSpeed",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        )
+
     } // end of Modifier
 
 } // end of GpsSelectionScreen
 
+@Preview(showBackground = true)
+@Composable
+fun GpsSelectionScreenPreview() { // need this
+    GpsSelectionScreen(MainActivityViewModel())
+}
