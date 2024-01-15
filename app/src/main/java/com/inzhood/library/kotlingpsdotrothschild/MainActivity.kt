@@ -27,7 +27,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.inzhood.library.gpslibrary.model.TransportSpeeds
 import com.inzhood.library.kotlingpsdotrothschild.ui.theme.KotlinGpsDotrothschildTheme
+
 
 class MainActivity : ComponentActivity() {
     private
@@ -71,7 +73,8 @@ fun GpsSelectionScreen(viewModel: MainActivityViewModel)
                 .fillMaxWidth()
                 .padding(8.dp)
         )
-        val selectionSpeeds = listOf("Speed 1", "Speed 2", "Speed 3", "Speed 4", "Speed 5")
+        //val selectionSpeeds = listOf("Speed 1", "Speed 2", "Speed 3", "Speed 4", "Speed 5")
+        val selectionSpeeds =  TransportSpeeds.getModeKeys()
         var buttonEnabled by remember { mutableStateOf(viewModel.candidateSpeed.value != chooseSelectionText) }
         Spacer(modifier = Modifier.height(16.dp))
         Dropdown(Modifier.wrapContentSize(),

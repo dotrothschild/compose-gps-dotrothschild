@@ -70,4 +70,5 @@ dependencies {
 
     // Shimon's implementation'
     implementation("androidx.compose.runtime:runtime-livedata:1.5.4") // to watch live data in viewmodel
+    implementation(project(":gpslibrary"))
 }
