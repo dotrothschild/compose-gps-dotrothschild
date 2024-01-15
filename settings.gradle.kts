@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Kotlin Gps Dotrothschild"
 include(":app")
+include(":gpslibrary")

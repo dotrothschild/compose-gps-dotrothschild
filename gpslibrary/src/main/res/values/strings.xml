@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mode_walking">Walking</string>
+    <string name="mode_bicycle">Bicycle</string>
+    <string name="mode_atv_moped_scooter">ATV, Moped, Scooter</string>
+    <string name="mode_automobile">Automobile</string>
+    <string name="mode_helicopter">Helicopter</string>
+    <string name="save">Save</string>
+    <string name="discard">Discard</string>
+    <string name="saveRoute">Save route</string>
+    <string name="doSaveRoute">Do you want to save the route? The file is named: </string>
+    <string name="option_give_file_name">File name</string>
+    <string name="do_load_route">Load route</string>
+    <string name="load">Load</string>
+    <string name="cancel">Cancel</string>
+    <string name="file_name" translatable="false">route.json</string>
+    <string name="default_file_name" translatable="false">Default file name</string>
+    <string name="replaces_current_route">This replaces your current route</string>
+    <string name="there_are_no_saved_routes">There are no saved routes.</string>
+</resources>
+    <!--
+        val modeKey = "walking" // Example key
+        val translatedMode = getString(resources.getIdentifier("mode_$modeKey", "string", packageName))
+        // Use translatedMode in your UI to display the localized mode name
+    -->
