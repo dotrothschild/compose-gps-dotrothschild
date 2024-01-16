@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.Toast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.inzhood.library.gpslibrary.CustomDialog
 import com.inzhood.library.gpslibrary.R
 import com.inzhood.library.gpslibrary.route.RouteLogic.Companion.isValidFileName
 
@@ -20,14 +21,16 @@ class RouteUI {
                 val buttonDiscardText = activity.getString(R.string.discard)
                 val textSaveRoute = activity.getString(R.string.saveRoute)
                 val textQuestionSaveRoute = activity.getString(R.string.doSaveRoute)
-
+                val customDialog = CustomDialog.create(activity)
+                customDialog.show(activity)
           //      val editText = EditText(activity) // Create an EditText for filename input
-                // Inflate your custom layout
+
+/*
+  // Inflate your custom layout
                 val inflater = LayoutInflater.from(activity)
                 val customLayout = inflater.inflate(R.layout.custom_dialog_layout, null)
 
                 val editText = customLayout.findViewById<EditText>(R.id.editText) // Find your EditText in the custom layout
-
                 MaterialAlertDialogBuilder(activity)
                     .setTitle(textSaveRoute)
                     .setMessage(textQuestionSaveRoute)
@@ -47,6 +50,8 @@ class RouteUI {
                     .setNegativeButton(buttonDiscardText) { _, _ ->
                     }
                     .show()
+
+ */
             } else {
                 RouteStorage.saveToFile(activity, _routeName)
             }

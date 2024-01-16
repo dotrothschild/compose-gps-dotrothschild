@@ -21,6 +21,8 @@ class TransportSpeeds {
             val transportSpeed = speeds.find { it.modeKey == mode }
             return transportSpeed?.speedMps ?: speeds[0].speedMps
         }
+        fun getModeKeys(): List<String> {
+            return speeds.map { it.modeKey }}
     }
 }
 

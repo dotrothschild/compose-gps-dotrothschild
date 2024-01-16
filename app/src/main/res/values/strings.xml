@@ -4,4 +4,6 @@
     <string name="placeholder_location">Placeholder location</string>
     <string name="location_not_found">Location not found</string>
     <string name="none_selected">None selected</string>
+    <string name="confirm">Confirm</string>
+    <string name="save">Save</string>
 </resources>
