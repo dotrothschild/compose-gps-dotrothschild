@@ -25,3 +25,10 @@ fun Activity.hasPermission(permission: String): Boolean {
         permission
     ) == PackageManager.PERMISSION_GRANTED
 }
+
+fun String.isValidFileName(): Boolean {
+    // more restrictive. only letters, numbers, underscores, and hyphens,
+    val pattern = "[\\w-]+" // "[^\\\\/:*?\"<>|]+"
+    val regex = Regex(pattern)
+    return regex.matches(this)
+}

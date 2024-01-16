@@ -7,16 +7,19 @@
     <string name="mode_helicopter">Helicopter</string>
     <string name="save">Save</string>
     <string name="discard">Discard</string>
-    <string name="saveRoute">Save route</string>
-    <string name="doSaveRoute">Do you want to save the route? The file is named: </string>
+    <string name="save_route">Save route</string>
+    <string name="do_save_route">Do you want to save the route? The file is named:</string>
     <string name="option_give_file_name">File name</string>
-    <string name="do_load_route">Load route</string>
-    <string name="load">Load</string>
+    <string name="load_route">Load route</string>
+    <string name="do_load_route">Do you want to load the route? The file is named:</string>
     <string name="cancel">Cancel</string>
-    <string name="file_name" translatable="false">route.json</string>
-    <string name="default_file_name" translatable="false">Default file name</string>
+    <string name="default_file_name" translatable="false">route</string>
     <string name="replaces_current_route">This replaces your current route</string>
     <string name="there_are_no_saved_routes">There are no saved routes.</string>
+    <string name="ok">OK</string>
+    <string name="invalid_filename">Invalid file name: Letters, numbers, underscores, and hyphens.</string>
+    <string name="file_name">File name</string>
+
 </resources>
     <!--
         val modeKey = "walking" // Example key

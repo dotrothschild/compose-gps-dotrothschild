@@ -48,7 +48,7 @@ class RouteStorage {
                 Log.e("***DotR***", "Failed to write file " + filename + "Error: " +e.message)
             }
         }
-        fun openFile(context: Context, filename: String) {
+        fun loadFile(context: Context, filename: String) {
             val result = loadFromFile(context, filename)
             if (result != null) {
                 Route.mutableListToRoute(result)
