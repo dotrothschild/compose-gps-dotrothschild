@@ -2,7 +2,6 @@ package com.inzhood.library.kotlingpsdotrothschild
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,18 +18,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,13 +35,13 @@ import com.inzhood.library.kotlingpsdotrothschild.ui.theme.KotlinGpsDotrothschil
 
 
 class MainActivity : ComponentActivity() {
-    val viewModel: MainActivityViewModel by viewModels()
+    private val viewModel: MainActivityViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.updateCandidateSpeed(getString(R.string.touch_and_select_from_list)) // Modify to view model factory when getting complex
         setContent {
             MaterialTheme {
-                 GpsSelectionScreen(viewModel)
+                GpsSelectionScreen(viewModel)
             }
 
 
@@ -130,7 +124,6 @@ fun GpsSelectionScreen(viewModel: MainActivityViewModel)
                 // Button to trigger the dialog
                 Button(
                     onClick = { showSaveDialog.value = true },
-
                     enabled = true,
                     modifier = Modifier
                         .wrapContentSize()
@@ -144,6 +137,25 @@ fun GpsSelectionScreen(viewModel: MainActivityViewModel)
                     RouteUI.showSaveRouteDialog(context as Activity)
                     showSaveDialog.value = false
                 }
+                //****show load dialog
+                Spacer(modifier = Modifier.height(16.dp))
+                val showLoadDialog = remember(context) { mutableStateOf(false) }
+                Button(
+                    onClick = { showLoadDialog.value = true },
+                    enabled = true,
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .height(56.dp)
+                        .padding(8.dp)
+                ) {
+                    Text(text = stringResource(R.string.load))
+                }
+                if (showLoadDialog.value) {
+                    RouteUI.showLoadRouteDialog(context as Activity)
+                    showLoadDialog.value = false
+                }
+
+
             } // end of Modifier
         }// end of Surface
     } // end of KotlinGpsDotrothschildTheme

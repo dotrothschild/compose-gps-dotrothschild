@@ -6,4 +6,5 @@
     <string name="none_selected">None selected</string>
     <string name="confirm">Confirm</string>
     <string name="save">Save</string>
+    <string name="load">Load</string>
 </resources>

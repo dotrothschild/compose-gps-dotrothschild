@@ -13,7 +13,9 @@ class MainActivityViewModel : ViewModel() {
         count.value++
         updateLocation()
     }
-    private val _currentLocation =  MutableStateFlow("placeholder location") // THis string is initial value
+
+    private val _currentLocation =
+        MutableStateFlow("placeholder location") // THis string is initial value
     val currentLocation: StateFlow<String> = _currentLocation
 
     private fun updateLocation() {
@@ -21,17 +23,20 @@ class MainActivityViewModel : ViewModel() {
     }
 
     // The currently displayed candidate speed, accepted on button click
-    private val _candidateSpeed =  MutableStateFlow("placeholder Speed") // THis string is initial value
+    private val _candidateSpeed =
+        MutableStateFlow("placeholder Speed") // THis string is initial value
     val candidateSpeed: StateFlow<String> = _candidateSpeed
     fun updateCandidateSpeed(newSpeed: String) {
         _candidateSpeed.value = newSpeed
     }
+
     // The current speed.
-    private val _currentSpeed =  MutableStateFlow("placeholder Speed") // THis string is initial value
+    private val _currentSpeed =
+        MutableStateFlow("placeholder Speed") // THis string is initial value
     val currentSpeed: StateFlow<String> = _currentSpeed
     fun updateCurrentSpeed() {
         _currentSpeed.value = _candidateSpeed.value
     }
-    
-    
+
+
 }
