@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationProvider
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -38,10 +37,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import com.inzhood.library.gpslibrary.hasPermission
 import com.inzhood.library.gpslibrary.model.TransportSpeeds
 import com.inzhood.library.gpslibrary.route.RouteUI
 import com.inzhood.library.kotlingpsdotrothschild.ui.theme.KotlinGpsDotrothschildTheme
@@ -49,7 +48,7 @@ import com.inzhood.library.kotlingpsdotrothschild.ui.theme.KotlinGpsDotrothschil
 
 class MainActivity : ComponentActivity() {
    // no factory private val viewModel: MainActivityViewModel by viewModels()
-   private val viewModel: MainActivityViewModel by viewModels() {
+   private val viewModel: MainActivityViewModel by viewModels {
        MainActivityViewModelFactory(this.application)
    }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,25 +63,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-    /*
-    override fun onStart() {
-        super.onStart()
-        if (!hasPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
-            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 0)
-        }
-    }
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            recreate()
-        }
-    }
-
-     */
 }
 
 @SuppressLint("ProduceStateDoesNotAssignValue")
@@ -107,10 +87,18 @@ fun GpsSelectionScreen(viewModel: MainActivityViewModel)
                     .fillMaxSize() // Expand to fill parent
                     .wrapContentSize(Alignment.Center) // Center within parent
             )
+
             {
+                val location by viewModel.location.observeAsState()
                 Text(
-                    text = "Current Location: $currentLocation",
+                    text = buildAnnotatedString {
+                        append("Current location: ")
+                        location?.let { append(showLocation(it)) } ?: append(stringResource(R.string.no_location))
+                    }
+                    ,
+                    //text = "Current Location: $location",
                     modifier = Modifier
+                        .semantics {  contentDescription = "The current location"  }
                         .fillMaxWidth()
                         .padding(8.dp)
                 )
@@ -214,45 +202,27 @@ fun LocationDisplay(viewModel: MainActivityViewModel) {
             Log.d("ExampleScreen","PERMISSION DENIED")
         }
     }
+
     val context = LocalContext.current
 
-    Button(
-        onClick = {
-            // Check permission
-            when (PackageManager.PERMISSION_GRANTED) {
-                ContextCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) -> {
-                    // Some works that require permission
-                    Log.d("ExampleScreen","Code requires permission")
-                }
-                else -> {
-                    // Asking for permission
-                    launcher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-                }
+    // Same as onStart
+    LaunchedEffect(Unit) {
+        // Check permission
+        when (PackageManager.PERMISSION_GRANTED) {
+            ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) -> {
+                viewModel.getLastKnownLocation()
+                viewModel.startUpdatingLocation()
+                Log.d("ExampleScreen", "Code requires permission")
+            }
+            else -> {
+                // Asking for permission
+                launcher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
             }
         }
-    ) {
-        Text(text = "Check and Request Permission")
     }
-
-
-
-
-
-
-    val location by viewModel.location.observeAsState()
-
-    LaunchedEffect(true) {
-        viewModel.getLastKnownLocation()
-        viewModel.startUpdatingLocation()
-    }
-
-    Text(
-        text = location?.let { showLocation(it) } ?: stringResource(R.string.no_location),
-        modifier = Modifier.semantics { contentDescription = "Location" }
-    )// Accessibility
 }
 
 fun showLocation(location: Location): String {
@@ -266,7 +236,14 @@ fun GpsSelectionScreenPreview() { // need this
     GpsSelectionScreen(MainActivityViewModel(context))
 }
 
-/* this is the orgiginalwith the deprecated, but working code
+
+
+
+
+
+
+
+/* this is the original the deprecated, but working code
 package com.inzhood.library.kotlingpsdotrothschild
 
 import android.Manifest

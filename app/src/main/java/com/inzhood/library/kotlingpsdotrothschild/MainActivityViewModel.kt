@@ -24,6 +24,7 @@ class MainActivityViewModel(context: Context) : ViewModel() {
     private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
     private val _location = MutableLiveData<Location>()
     val location: LiveData<Location> = _location
+
     fun getLastKnownLocation() {
         viewModelScope.launch {
             try {
