@@ -10,6 +10,7 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.Priority
 import com.inzhood.library.gpslibrary.model.TransportSpeeds.Companion.trueTransportSpeedFlow
+import com.inzhood.library.gpslibrary.route.Route
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.channels.awaitClose
@@ -55,6 +56,7 @@ fun FusedLocationProviderClient.locationFlow(): Flow<Location> = callbackFlow {
                 if (sendResult.isSuccess) {
                     val sentLocation = sendResult.getOrThrow()
                     // Use sentLocation as needed
+                    Route.add(location)
                     Log.d("LocationUtils", "Sent location: $sentLocation")
                     } else {
                     // Handle the case where sending failed, potentially due to a closed channel

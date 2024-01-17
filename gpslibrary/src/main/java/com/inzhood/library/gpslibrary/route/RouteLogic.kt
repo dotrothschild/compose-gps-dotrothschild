@@ -6,35 +6,21 @@ import com.inzhood.library.gpslibrary.model.TransportSpeeds
 class RouteLogic {
     companion object {
         fun addLocation(location: Location) {
-            // determine adding to route based on speed and distance
-            if (shouldAddLocation(location)) {
-                Route.add(location)
-            }
+            Route.add(location) // no logic just do it, ex: first location
         }
 
-        private fun shouldAddLocation(location: Location): Boolean {
-            // Check if there are no previous locations
-            if (!Route.hasItems()) return true
-            // depending on mode, how long min between route point updates. Data in TransportSpeeds.kt
-            return when (inferMode(location)) {
-                "Walking" -> location.time >= TransportSpeeds.getLocationUpdatesForMode("Walking") // 2 seconds
-                "Bicycle" -> location.time >= TransportSpeeds.getLocationUpdatesForMode("Bicycle") //2 sec
-                "Scooter" -> location.time >= TransportSpeeds.getLocationUpdatesForMode("Scooter") // 5 sec
-                "Automobile" -> location.time >= TransportSpeeds.getLocationUpdatesForMode("Automobile") // 5 sec
-                "Helicopter" -> location.time >= TransportSpeeds.getLocationUpdatesForMode("Helicopter") // 5 sec
-                else -> false
+        fun shouldAddLocation(oldLocation:Location, newLocation: Location): Boolean {
+            // test if meets the minimal distance
+            if (Route.hasItems()) {
+                val distance = newLocation.distanceTo(oldLocation) // meters
+                val minDist = TransportSpeeds.getMinDistForRoutePoint(TransportSpeeds.currentModeKey)
+                if (minDist != null && distance > minDist) {
+                   return true
+                }
             }
+            return false
         }
 
-        private fun inferMode(location: Location): String {
-            return when {
-                location.speed < TransportSpeeds.getMaxTravelSpeed("Walking") -> "Walking"
-                location.speed < TransportSpeeds.getMaxTravelSpeed("Bicycle") -> "Bicycle"
-                location.speed < TransportSpeeds.getMaxTravelSpeed("Scooter") -> "Scooter"
-                location.speed < TransportSpeeds.getMaxTravelSpeed("Automobile") -> "Automobile"
-                else -> "Helicopter"
-            }
-        }
 
         fun isValidFileName(fileName: String): Boolean {
             val pattern = "[^\\\\/:*?\"<>|]+"

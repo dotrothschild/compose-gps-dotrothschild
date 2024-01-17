@@ -29,11 +29,20 @@ class TransportSpeeds {
         fun getModeKeys(): List<String> {
             return speeds.map { it.modeKey }}
 
+        private var _currentModeKey: String = "Walking"
+        val currentModeKey: String = _currentModeKey
         private val _trueTransportSpeedFlow =  MutableStateFlow(getLocationUpdatesForMode("Walking"))
         val trueTransportSpeedFlow: StateFlow<Long> = _trueTransportSpeedFlow
         fun setTransportSpeed(modeKey: String) {
+            _currentModeKey = modeKey
              _trueTransportSpeedFlow.value = getLocationUpdatesForMode(modeKey)
         }
+
+        fun getMinDistForRoutePoint(modeKey: String): Double? {
+            return speeds.find { it.modeKey == modeKey }
+                ?.let { it.speedMps * it.updateFrequencyMs / 1000.0 }
+        } // returns null if not found
+
     }
 }
 
