@@ -70,7 +70,6 @@ class MainActivity : ComponentActivity() {
 fun GpsSelectionScreen(viewModel: MainActivityViewModel)
 // this is when not explicitly passing the viewModel as param (viewModel: MainActivityViewModel = remember { MainActivityViewModel() })
 {
-    val currentLocation by viewModel.currentLocation.collectAsState(initial = stringResource(R.string.location_not_found))
     // this was in setContent of class mainActivity, moved here to try stop crashing
     KotlinGpsDotrothschildTheme {
         // A surface container using the 'background' color from the theme

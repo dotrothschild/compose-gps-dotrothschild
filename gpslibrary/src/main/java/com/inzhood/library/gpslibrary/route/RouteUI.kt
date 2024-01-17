@@ -1,7 +1,6 @@
 package com.inzhood.library.gpslibrary.route
 
 import android.app.Activity
-import com.inzhood.library.gpslibrary.CustomSaveDialog
 
 class RouteUI {
     companion object {

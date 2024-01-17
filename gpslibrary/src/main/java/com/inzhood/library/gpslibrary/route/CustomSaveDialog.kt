@@ -1,4 +1,4 @@
-package com.inzhood.library.gpslibrary
+package com.inzhood.library.gpslibrary.route
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -9,7 +9,8 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.widget.Button
 import android.widget.TextView
-import com.inzhood.library.gpslibrary.route.RouteStorage
+import com.inzhood.library.gpslibrary.R
+import com.inzhood.library.gpslibrary.isValidFileName
 
 class CustomSaveDialog private constructor(context: Context) {
 
