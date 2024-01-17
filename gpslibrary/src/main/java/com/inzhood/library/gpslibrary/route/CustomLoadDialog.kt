@@ -63,7 +63,7 @@ class CustomLoadDialog private constructor() {
 
 
     companion object {
-        fun create(): CustomLoadDialog {
+        fun create(context: Context): CustomLoadDialog {
             return CustomLoadDialog()
         }
     }
