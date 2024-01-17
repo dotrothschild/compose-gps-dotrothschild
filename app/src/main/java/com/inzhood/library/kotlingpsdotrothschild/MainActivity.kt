@@ -77,6 +77,12 @@ fun GpsSelectionScreen(viewModel: MainActivityViewModel)
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
+            LaunchedEffect(TransportSpeeds) {
+                TransportSpeeds.trueTransportSpeedFlow.collect { newInterval ->
+                    // Handle the changes in the interval
+                    viewModel.updateLocationUpdateInterval(newInterval)
+                }
+            }
             LocationDisplay(viewModel) // Add the LocationDisplay composable
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -115,9 +121,7 @@ fun GpsSelectionScreen(viewModel: MainActivityViewModel)
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
                     onClick = {
-                        viewModel.increment() // just for testing purposes, current location is updated in the viewModel
                         viewModel.updateCurrentSpeed()
-
                     },
                     enabled = buttonEnabled,
                     modifier = Modifier

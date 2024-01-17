@@ -13,6 +13,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.LocationServices
 import com.inzhood.library.gpslibrary.awaitLastLocation
 import com.inzhood.library.gpslibrary.locationFlow
+import com.inzhood.library.gpslibrary.model.TransportSpeeds
 import com.inzhood.library.gpslibrary.route.RouteLogic
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -82,6 +83,14 @@ class MainActivityViewModel(context: Context) : ViewModel() {
     val currentSpeed: StateFlow<String> = _currentSpeed
     fun updateCurrentSpeed() {
         _currentSpeed.value = _candidateSpeed.value
+        TransportSpeeds.setTransportSpeed(_currentSpeed.value)
+        val mps = TransportSpeeds.getLocationUpdatesForMode(_currentSpeed.value)
+    }
+
+    private var _currentUpdateInterval: Long = 2000L
+    fun updateLocationUpdateInterval(newInterval: Long){
+        _currentUpdateInterval = newInterval
+
     }
 }
 
