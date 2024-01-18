@@ -37,6 +37,7 @@ class MainActivityViewModel(context: Context) : ViewModel() {
             }
         }
     }
+
     fun startUpdatingLocation() {
         viewModelScope.launch { // Use viewModelScope for lifecycle-aware coroutines
             fusedLocationClient.locationFlow()
@@ -53,7 +54,6 @@ class MainActivityViewModel(context: Context) : ViewModel() {
     }
 
 
-
     //  ******************  new code ****************
     private val count: MutableState<Int> = mutableIntStateOf(0)
     fun increment() {
@@ -63,10 +63,11 @@ class MainActivityViewModel(context: Context) : ViewModel() {
 
     private val _currentLocation =
         MutableStateFlow("placeholder location") // THis string is initial value
-    val currentLocation: StateFlow<String> =  _currentLocation
+    val currentLocation: StateFlow<String> = _currentLocation
 
     private fun updateLocation() {
-        _currentLocation.value = _location.value.toString() // for testing only count.value.toString()
+        _currentLocation.value =
+            _location.value.toString() // for testing only count.value.toString()
     }
 
     // The currently displayed candidate speed, accepted on button click
@@ -88,7 +89,7 @@ class MainActivityViewModel(context: Context) : ViewModel() {
     }
 
     private var _currentUpdateInterval: Long = 2000L
-    fun updateLocationUpdateInterval(newInterval: Long){
+    fun updateLocationUpdateInterval(newInterval: Long) {
         _currentUpdateInterval = newInterval
 
     }

@@ -47,10 +47,11 @@ import com.inzhood.library.kotlingpsdotrothschild.ui.theme.KotlinGpsDotrothschil
 
 
 class MainActivity : ComponentActivity() {
-   // no factory private val viewModel: MainActivityViewModel by viewModels()
-   private val viewModel: MainActivityViewModel by viewModels {
-       MainActivityViewModelFactory(this.application)
-   }
+    // no factory private val viewModel: MainActivityViewModel by viewModels()
+    private val viewModel: MainActivityViewModel by viewModels {
+        MainActivityViewModelFactory(this.application)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -98,12 +99,12 @@ fun GpsSelectionScreen(viewModel: MainActivityViewModel)
                 Text(
                     text = buildAnnotatedString {
                         append("Current location: ")
-                        location?.let { append(showLocation(it)) } ?: append(stringResource(R.string.no_location))
-                    }
-                    ,
+                        location?.let { append(showLocation(it)) }
+                            ?: append(stringResource(R.string.no_location))
+                    },
                     //text = "Current Location: $location",
                     modifier = Modifier
-                        .semantics {  contentDescription = "The current location"  }
+                        .semantics { contentDescription = "The current location" }
                         .fillMaxWidth()
                         .padding(8.dp)
                 )
@@ -198,11 +199,11 @@ fun LocationDisplay(viewModel: MainActivityViewModel) {
             // Permission Accepted: Do something
             viewModel.getLastKnownLocation()
             viewModel.startUpdatingLocation()
-            Log.d("ExampleScreen","PERMISSION GRANTED")
+            Log.d("ExampleScreen", "PERMISSION GRANTED")
 
         } else {
             // Permission Denied: Do something
-            Log.d("ExampleScreen","PERMISSION DENIED")
+            Log.d("ExampleScreen", "PERMISSION DENIED")
         }
     }
 
@@ -220,6 +221,7 @@ fun LocationDisplay(viewModel: MainActivityViewModel) {
                 viewModel.startUpdatingLocation()
                 Log.d("ExampleScreen", "Code requires permission")
             }
+
             else -> {
                 // Asking for permission
                 launcher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -238,12 +240,6 @@ fun GpsSelectionScreenPreview() { // need this
     val context = LocalContext.current
     GpsSelectionScreen(MainActivityViewModel(context))
 }
-
-
-
-
-
-
 
 
 /* this is the original the deprecated, but working code
