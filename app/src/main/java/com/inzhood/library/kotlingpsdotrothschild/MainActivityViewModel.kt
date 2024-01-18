@@ -15,14 +15,23 @@ import com.inzhood.library.gpslibrary.awaitLastLocation
 import com.inzhood.library.gpslibrary.locationFlow
 import com.inzhood.library.gpslibrary.model.TransportSpeeds
 import com.inzhood.library.gpslibrary.route.RouteLogic
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Provider
 
-class MainActivityViewModel(context: Context) : ViewModel() {
-    private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
+//class MainActivityViewModel(context: Context) : ViewModel() {
+@HiltViewModel
+class MainActivityViewModel @Inject constructor(
+    activity: MainActivity
+) : ViewModel(){
+
+    private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity.applicationContext)
     private val _location = MutableLiveData<Location>()
     val location: LiveData<Location> = _location
 
@@ -91,16 +100,5 @@ class MainActivityViewModel(context: Context) : ViewModel() {
     fun updateLocationUpdateInterval(newInterval: Long){
         _currentUpdateInterval = newInterval
 
-    }
-}
-
-// *************************************   FACTORY  ********************************************
-class MainActivityViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MainActivityViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return MainActivityViewModel(context) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
