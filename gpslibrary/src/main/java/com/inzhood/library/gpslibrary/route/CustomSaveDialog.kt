@@ -1,14 +1,25 @@
 package com.inzhood.library.gpslibrary.route
-
+/*
+ * Copyright (c) Shimon Rothschild, www.dotRothschild.com 2024
+ *
+ * Please attribute this code if used without significant modifications:
+ *  - Include my name, Shimon Rothschild or company name, dotRothschild
+ *    in the project's credits or documentation.
+ *  - Link back to my website or GitHub repository (if applicable).
+ *
+ * Thank you for respecting my work!
+ */
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.inzhood.library.gpslibrary.R
 import com.inzhood.library.gpslibrary.isValidFileName
 
@@ -32,14 +43,36 @@ class CustomSaveDialog private constructor(context: Context) {
             // Handle negative button click or dismiss if not needed
             alertDialog?.dismiss()
         }
-
         val okButton: Button = view.findViewById(R.id.okButton)
         okButton.setOnClickListener {
             val fileView: TextView = view.findViewById(R.id.fileName)
             val filename = fileView.text.toString().trim()
             if (filename.isValidFileName()) {
-                RouteStorage.saveToFile(context, filename)
-                alertDialog?.dismiss()
+                try {
+                    // Attempt file saving
+                    if (RouteStorage.saveToFile(context, filename)) {
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.file_saved_successfully),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.error_saving_file),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } catch (e: Exception) {
+                    Log.e("FileSaveError", "Error saving file", e)
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.error_occurred_saving_file),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } finally {
+                    alertDialog?.dismiss()
+                }
             } else {
                 // Provide clear visual feedback to the user:
                 fileView.error =  context.getString(R.string.invalid_filename)

@@ -6,10 +6,8 @@
     <string name="mode_automobile">Automobile</string>
     <string name="mode_helicopter">Helicopter</string>
     <string name="save">Save</string>
-    <string name="discard">Discard</string>
     <string name="save_route">Save route</string>
     <string name="do_save_route">Do you want to save the route? The file is named:</string>
-    <string name="option_give_file_name">File name</string>
     <string name="load_route">Load route</string>
     <string name="do_load_route">Do you want to load the route? The file is named:</string>
     <string name="cancel">Cancel</string>
@@ -19,6 +17,12 @@
     <string name="ok">OK</string>
     <string name="invalid_filename">Invalid file name: Letters, numbers, underscores, and hyphens.</string>
     <string name="file_name">File name</string>
+    <string name="file_saved_successfully">File saved successfully</string>
+    <string name="error_saving_file">Error saving file</string>
+    <string name="error_occurred_saving_file">Error occurred while saving file</string>
+    <string name="file_loaded_successfully">File loaded successfully</string>
+    <string name="error_loading_file">Error loading file</string>
+    <string name="error_occurred_loading_file">Error occurred loading file</string>
 
 </resources>
     <!--

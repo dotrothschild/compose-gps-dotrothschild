@@ -1,5 +1,14 @@
 package com.inzhood.library.gpslibrary
-
+/*
+ * Copyright (c) Shimon Rothschild, www.dotRothschild.com 2024
+ *
+ * Please attribute this code if used without significant modifications:
+ *  - Include my name, Shimon Rothschild or company name, dotRothschild
+ *    in the project's credits or documentation.
+ *  - Link back to my website or GitHub repository (if applicable).
+ *
+ * Thank you for respecting my work!
+ */
 import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Looper
@@ -20,8 +29,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
-
-
 
 var currentLocationRequest: LocationRequest? = null
 var currentLocationCallback: LocationCallback? = null

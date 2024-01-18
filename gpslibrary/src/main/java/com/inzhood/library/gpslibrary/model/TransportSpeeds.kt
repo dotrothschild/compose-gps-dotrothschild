@@ -1,5 +1,14 @@
 package com.inzhood.library.gpslibrary.model
-
+/*
+ * Copyright (c) Shimon Rothschild, www.dotRothschild.com 2024
+ *
+ * Please attribute this code if used without significant modifications:
+ *  - Include my name, Shimon Rothschild or company name, dotRothschild
+ *    in the project's credits or documentation.
+ *  - Link back to my website or GitHub repository (if applicable).
+ *
+ * Thank you for respecting my work!
+ */
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -21,11 +30,7 @@ class TransportSpeeds {
             val transportSpeed = speeds.find { it.modeKey == mode }
             return transportSpeed?.updateFrequencyMs ?: 2000L
         }
-        // for updating the route array get the max speed of a particular type of transport
-        fun getMaxTravelSpeed(mode: String): Double {
-            val transportSpeed = speeds.find { it.modeKey == mode }
-            return transportSpeed?.speedMps ?: speeds[0].speedMps
-        }
+
         fun getModeKeys(): List<String> {
             return speeds.map { it.modeKey }}
 

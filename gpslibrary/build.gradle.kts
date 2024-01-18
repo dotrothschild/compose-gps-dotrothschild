@@ -49,5 +49,4 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10")
     implementation("androidx.compose.ui:ui:1.5.4") // Need this to test if calling activity is compose or material
     implementation("androidx.compose.material:material:1.5.4")
-
 }

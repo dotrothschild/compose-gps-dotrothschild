@@ -1,5 +1,14 @@
 package com.inzhood.library.gpslibrary.route
-
+/*
+ * Copyright (c) Shimon Rothschild, www.dotRothschild.com 2024
+ *
+ * Please attribute this code if used without significant modifications:
+ *  - Include my name, Shimon Rothschild or company name, dotRothschild
+ *    in the project's credits or documentation.
+ *  - Link back to my website or GitHub repository (if applicable).
+ *
+ * Thank you for respecting my work!
+ */
 import android.location.Location
 import com.inzhood.library.gpslibrary.model.TransportSpeeds
 
@@ -19,13 +28,6 @@ class RouteLogic {
                 }
             }
             return false
-        }
-
-
-        fun isValidFileName(fileName: String): Boolean {
-            val pattern = "[^\\\\/:*?\"<>|]+"
-            val regex = Regex(pattern)
-            return fileName.matches(regex)
         }
 
         fun getVariableNameFromFilename(filename: String): String {

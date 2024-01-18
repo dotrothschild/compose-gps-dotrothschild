@@ -1,12 +1,17 @@
 package com.inzhood.library.gpslibrary.route
 /*
-Route Class: Its responsibility  is hold route data
-
+ * Copyright (c) Shimon Rothschild, www.dotRothschild.com 2024
+ *
+ * Please attribute this code if used without significant modifications:
+ *  - Include my name, Shimon Rothschild or company name, dotRothschild
+ *    in the project's credits or documentation.
+ *  - Link back to my website or GitHub repository (if applicable).
+ *
+ * Thank you for respecting my work!
  */
 import android.location.Location
 import com.google.gson.Gson
 import com.inzhood.library.gpslibrary.model.RoutePointData
-import com.inzhood.library.gpslibrary.model.TransportSpeeds
 
 
 class Route private constructor()
@@ -18,7 +23,6 @@ class Route private constructor()
             return locations.size > 0
         }
 
-        // SHIMON: CAUTION, THIS SHOULD BE CALLED ONLY FROM RouteLogic!!!!! TODO: Redesign so it works that way
         internal fun add(location: Location) {
             if (!hasItems()) {
                 locations.add(location)

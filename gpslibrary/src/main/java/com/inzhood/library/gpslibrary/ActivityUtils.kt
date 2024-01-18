@@ -1,5 +1,14 @@
 package com.inzhood.library.gpslibrary
-
+/*
+ * Copyright (c) Shimon Rothschild, www.dotRothschild.com 2024
+ *
+ * Please attribute this code if used without significant modifications:
+ *  - Include my name, Shimon Rothschild or company name, dotRothschild
+ *    in the project's credits or documentation.
+ *  - Link back to my website or GitHub repository (if applicable).
+ *
+ * Thank you for respecting my work!
+ */
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.location.Location
